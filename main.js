@@ -4,7 +4,7 @@ let timerSpan = document.querySelector("#timer");
 let timeCount = 10;
 let currentTimeCount;
 let allPimples = document.querySelectorAll(".pimple");
-let maxPimples = 10;
+let maxPimples = 8;
 let currentMax;
 let allPopped = document.querySelectorAll(".popped");
 let active = true;
@@ -101,17 +101,17 @@ function gameRestart() {
   startButton.style.display = "none";
 }
 
-playAgainButton.addEventListener("click", function () {
-  clearPimples();
-  gameInit();
-  startTimer(timeCount);
-});
-
 function clearPimples() {
   allPimples = document.querySelectorAll(".pimple");
   for (let i = 0; i < allPimples.length; i++) {
     allPimples[i].remove();
   }
 }
+
+playAgainButton.addEventListener("click", function () {
+  clearPimples();
+  gameInit();
+  startTimer(timeCount);
+});
 
 gameInit();
