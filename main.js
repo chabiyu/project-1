@@ -1,25 +1,20 @@
-const main = () => {};
-
 const startButton = document.querySelector("#start-button");
-
+const playAgainButton = document.querySelector("#replay-button");
+let resultMessage = document.getElementById("result");
 let timerSpan = document.querySelector("#timer");
 let timeCount = 10;
 let currentTimeCount;
 let allPimples = document.querySelectorAll(".pimple");
-let maxPimples = 5;
+let maxPimples = 10;
 let currentMax;
+let allPopped = document.querySelectorAll(".popped");
+let active = true;
+let win = false;
 
 function gameInit() {
+  playAgainButton.style.display = "none";
   manyPimples();
 }
-
-const createPimple = function () {
-  let newPimple = document.createElement("div");
-  newPimple.setAttribute("class", "pimple");
-  document.body.appendChild(newPimple);
-  newPimple.style.top = 400 - Math.random() * 300 + 300 + "px";
-  newPimple.style.left = 400 - Math.random() * 300 + 300 + "px";
-};
 
 let manyPimples = function () {
   currentMax = maxPimples;
@@ -28,7 +23,27 @@ let manyPimples = function () {
   }
 };
 
-//Set up Timer Function
+const createPimple = function () {
+  let newPimple = document.createElement("div");
+  newPimple.setAttribute("class", "pimple");
+  document.body.appendChild(newPimple);
+  newPimple.style.top = 400 - Math.random() * 300 + 300 + "px";
+  newPimple.style.left = 400 - Math.random() * 300 + 700 + "px";
+  active = true;
+  win = false;
+
+  newPimple.addEventListener("click", function () {
+    newPimple.classList.add("popped");
+
+    setTimeout(() => {
+      newPimple.style.display = "none";
+      currentMax -= 1;
+      if (currentMax === 0 && active) {
+        youWon();
+      }
+    }, 1000);
+  });
+};
 
 startButton.addEventListener("click", function () {
   startTimer(timeCount);
@@ -36,12 +51,23 @@ startButton.addEventListener("click", function () {
 
 function startTimer(seconds) {
   currentTimeCount = timeCount;
-  timerSpan.innerText = "00:0" + timeCount;
+  timerSpan.innerText = "00:" + timeCount;
   let timer = setInterval(function () {
     seconds -= 1;
     currentTimeCount -= 1;
+    if (seconds === 0) {
+      active = false;
+      checkWinLose();
+    }
 
-    timerSpan.innerText = "00:0" + seconds;
+    if (seconds.toString().length === 1) {
+      seconds = "0" + seconds;
+    }
+    if (win === true) {
+      clearInterval(timer);
+    }
+
+    timerSpan.innerText = "00:" + seconds;
   }, 1000);
 
   setTimeout(function () {
@@ -49,6 +75,44 @@ function startTimer(seconds) {
   }, seconds * 1000);
 }
 
-gameInit();
+function checkWinLose() {
+  if (currentMax > 0 && currentTimeCount === 0) {
+    youLose();
+  }
+  gameRestart();
+}
 
-$(main);
+function stopTimer() {
+  clearInterval(startTimer);
+}
+
+function youWon() {
+  win = true;
+  alert("You won!");
+  gameRestart();
+}
+
+function youLose() {
+  stopTimer();
+  alert("You Lose!");
+}
+
+function gameRestart() {
+  playAgainButton.style.display = "block";
+  startButton.style.display = "none";
+}
+
+playAgainButton.addEventListener("click", function () {
+  clearPimples();
+  gameInit();
+  startTimer(timeCount);
+});
+
+function clearPimples() {
+  allPimples = document.querySelectorAll(".pimple");
+  for (let i = 0; i < allPimples.length; i++) {
+    allPimples[i].remove();
+  }
+}
+
+gameInit();

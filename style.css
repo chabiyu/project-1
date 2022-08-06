@@ -1,4 +1,4 @@
-.container {
+.background {
   position: relative;
   text-align: center;
   background-color: red;
@@ -14,7 +14,7 @@
  font-family: "ZCOOl Kuaile";
 }
 
-.block {
+.start {
   display: block;
   width: 100%;
   border: none;
@@ -42,8 +42,21 @@
   height: 60px;
   background-repeat: no-repeat;
 
-  }
+}
 
-  div {
-    cursor: url(https://i.ibb.co/khhvxgd/output-onlinepngtools-2.png),auto;
-    }
+.replay {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: yellow;
+  padding: 10px 20px;
+  font-size: 40px;
+  cursor: pointer;
+  text-align: center;
+  font-family: "ZCOOl Kuaile";
+}
+
+.popped {
+  background-image: url(https://i.ibb.co/8Kwtz1M/imageedit-3-9406146708-1.png);
+}
+
