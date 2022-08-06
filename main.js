@@ -1,6 +1,5 @@
 const startButton = document.querySelector("#start-button");
 const playAgainButton = document.querySelector("#replay-button");
-let resultMessage = document.getElementById("result");
 let timerSpan = document.querySelector("#timer");
 let timeCount = 10;
 let currentTimeCount;
